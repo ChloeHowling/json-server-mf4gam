@@ -11,12 +11,13 @@
         href="https://i.imgur.com/OiaIRwL.png"
         type="image/x-icon"
       />
-      <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
       <!-- <link rel="stylesheet" href="style.css" /> -->
       <link rel="stylesheet" href="output.css" />
     </head>
     <body class="font-sans">
-      <form class="px-20 py-10">
+      <form class="px-20 py-10 flex-col">
+        <label for="courses" class="">Your Courses</label><br />
         <select
           aria-label="Select Course"
           id="course"
@@ -28,7 +29,7 @@
 
         <div id="uvuIdBox" style="display: none">
           <br />
-          <label for="uvuId">UVU ID</label>
+          <label for="uvuId">UVU ID</label><br />
           <input
             type="text"
             id="uvuId"

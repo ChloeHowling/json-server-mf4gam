@@ -119,7 +119,7 @@ select.on('change', () => {
     clearLogs();
   } else {
     displayLogsById(idInput.val);
-    idBox.show('flex');
+    idBox.show();
   }
   logReady();
 });

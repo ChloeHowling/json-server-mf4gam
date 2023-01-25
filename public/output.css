@@ -525,6 +525,10 @@ video {
   display: flex;
 }
 
+.flex-col {
+  flex-direction: column;
+}
+
 .p-10 {
   padding: 2.5rem;
 }

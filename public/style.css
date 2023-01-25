@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  label {
+    @apply font-black text-3xl;
+  }
+
+  input,
+  select,
+  textarea {
+    @apply w-full p-2 rounded my-2;
+  }
+}

@@ -16,8 +16,11 @@
       <link rel="stylesheet" href="output.css" />
     </head>
     <body class="font-sans">
-      <form class="px-20 py-10 flex-col">
-        <label for="courses" class="">Your Courses</label><br />
+      <form
+        class="px-20 py-10 flex-col max-w-xl mx-auto my-5 bg-slate-200 rounded"
+      >
+        <label for="courses" class="font-black text-3xl">Your Courses</label
+        ><br />
         <select
           aria-label="Select Course"
           id="course"
@@ -43,7 +46,11 @@
         </div>
         <br />
         <div id="logDisplay" style="display: none">
-          <h3 id="uvuIdDisplay" data-cy="uvuIdDisplay"></h3>
+          <h3
+            id="uvuIdDisplay"
+            data-cy="uvuIdDisplay"
+            class="font-black text-3xl"
+          ></h3>
           <ul id="uvuLogs" data-cy="logs"></ul>
         </div>
 
@@ -56,7 +63,21 @@
         ></textarea
         ><br />
         <!-- TODO: Button should be disabled until the logs, if any, are displayed and there's text in the textarea -->
-        <button id="newLogBtn" type="submit" data-cy="add_log_btn" disabled>
+        <button
+          id="newLogBtn"
+          type="button"
+          data-cy="add_log_btn"
+          class="
+            bg-gradient-to-r
+            from-green-400
+            to-blue-500
+            text-white
+            p-3
+            w-full
+            rounded
+          "
+          disabled
+        >
           Add Log
         </button>
       </form>

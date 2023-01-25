@@ -11,13 +11,12 @@
         href="https://i.imgur.com/OiaIRwL.png"
         type="image/x-icon"
       />
-      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-      <script src="https://cdn.tailwindcss.com"></script>
+      <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
       <!-- <link rel="stylesheet" href="style.css" /> -->
-      <!-- <link rel="stylesheet" href="tailwind.css" /> -->
+      <link rel="stylesheet" href="output.css" />
     </head>
-    <body>
-      <form>
+    <body class="font-sans">
+      <form class="px-20 py-10">
         <select
           aria-label="Select Course"
           id="course"
@@ -29,7 +28,7 @@
 
         <div id="uvuIdBox" style="display: none">
           <br />
-          <label for="uvuId" class="text-3xl font-bold underline">UVU ID</label>
+          <label for="uvuId">UVU ID</label>
           <input
             type="text"
             id="uvuId"

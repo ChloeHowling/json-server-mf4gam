@@ -1,26 +1,43 @@
 <!-- DONE: Create and use own favicon -->
 
 <!DOCTYPE html>
-<html>
-  <html lang="en">
-    <head>
-      <title>Student Logs</title>
-      <meta charset="UTF-8" />
-      <link
-        rel="shortcut icon"
-        href="https://i.imgur.com/OiaIRwL.png"
-        type="image/x-icon"
-      />
-      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-      <!-- <link rel="stylesheet" href="style.css" /> -->
-      <link rel="stylesheet" href="output.css" />
-    </head>
-    <body class="font-sans">
-      <form
-        class="px-20 py-10 flex-col max-w-xl mx-auto my-5 bg-slate-200 rounded"
+<html lang="en">
+  <head>
+    <title>Student Logs</title>
+    <meta charset="UTF-8" />
+    <link
+      rel="shortcut icon"
+      href="https://i.imgur.com/OiaIRwL.png"
+      type="image/x-icon"
+    />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <style type="text/tailwindcss">
+      @layer components {
+        label {
+          @apply font-black text-3xl;
+        }
+        input[type='text'],
+        select,
+        textarea {
+          @apply w-full p-4 rounded my-2 border-0 bg-slate-100;
+        }
+        li {
+          @apply w-full p-4 my-4 rounded bg-slate-100 hover:bg-gradient-to-r hover:text-white
+          from-purple-400
+          to-pink-300;
+        }
+      }
+    </style>
+    <!-- bg-clip-text hover:text-transparent  -->
+  </head>
+  <body class="font-sans bg-slate-300">
+    <form class="p-4 sm:w-full md:w-4/5 lg:w-3/5 mx-auto md:my-10">
+      <div
+        id="inputContainer"
+        class="px-20 pt-10 pb-20 flex-col rounded drop-shadow-lg bg-white"
       >
-        <label for="courses" class="font-black text-3xl">Your Courses</label
-        ><br />
+        <label for="courses">Your Courses</label><br />
         <select
           aria-label="Select Course"
           id="course"
@@ -40,21 +57,28 @@
             data-cy="uvuId_input"
             maxlength="8"
             placeholder="10234567"
-            pattern="[0-9]{8}"
+            pattern="[0-9]+"
             required
           />
         </div>
-        <br />
-        <div id="logDisplay" style="display: none">
-          <h3
-            id="uvuIdDisplay"
-            data-cy="uvuIdDisplay"
-            class="font-black text-3xl"
-          ></h3>
-          <ul id="uvuLogs" data-cy="logs"></ul>
-        </div>
+      </div>
 
-        <br /><label>New Log</label>
+      <br />
+      <div
+        id="logContainer"
+        style="display: none"
+        class="px-20 pt-10 pb-20 flex-col rounded drop-shadow-lg my-4 bg-white"
+      >
+        <label id="uvuIdDisplay" data-cy="uvuIdDisplay"></label><br /><br />
+        <ul id="uvuLogs" data-cy="logs"></ul>
+      </div>
+
+      <br />
+      <div
+        id="newLogContainer"
+        class="px-20 pt-10 pb-20 flex-col rounded drop-shadow-lg bg-white"
+      >
+        <label>New Log</label>
         <textarea
           id="newLog"
           style="height: 75px"
@@ -62,62 +86,28 @@
           data-cy="log_textarea"
         ></textarea
         ><br />
-        <!-- TODO: Button should be disabled until the logs, if any, are displayed and there's text in the textarea -->
         <button
           id="newLogBtn"
-          type="button"
+          type="submit"
           data-cy="add_log_btn"
           class="
             bg-gradient-to-r
             from-green-400
             to-blue-500
             text-white
-            p-3
+            p-4
+            my-2
             w-full
             rounded
+            disabled:opacity-50 disabled:cursor-not-allowed
+            hover:animate-pulse
           "
           disabled
         >
           Add Log
         </button>
-      </form>
-      <script src="script.js"></script>
-    </body>
-  </html>
-
-  <!-- DONE: The following options are currently static values to show you sample data.  -->
-  <!-- AJAX to replace them with dynamic data from GET https://json-server-ft3qa5--3000.local.webcontainer.io/api/v1/courses -->
-  <!-- NOTE: all AJAX in this project is via fetch-->
-  <!-- Use your own unique URL you recorded, not the sample one above. -->
-
-  <!-- DONE: Don't show the uvu id text input box until a course was selected above. -->
-
-  <!-- DONE: If course ever becomes unselected, don't show the uvu id text input box.-->
-
-  <!-- DONE: write `10234567` as sample data on the input field below  -->
-
-  <!-- DONE: Only numbers, no letters or other characters-->
-
-  <!-- DONE: Ensure the character length never exceeds 8 -->
-
-  <!-- DONE: Only numbers, no letters or other characters-->
-
-  <!-- DONE: When character length reaches 8 and it's only digits, fire off ajax request, if 200 or 304, display results, else appropriately guide the user. -->
-
-  <!-- DONE: The following options are currently static values to show you an example.  -->
-  <!-- You must replace them with dynamic data by ajaxing GET https://json-server-ft3qa5--3000.local.webcontainer.io/logs?courseId=<courseID>&uvuId=<uvuID> -->
-
-  <!-- DONE: Click anywhere on the log to toggle visibility of the log (text only, not the date) -->
-
-  <!-- DONE: Button should be disabled until the logs, if any, are displayed and there's text in the textarea -->
-
-  <!-- DONE: Button should AJAX PUT the textarea value to json-server which will store it -->
-
-  <!-- DONE: add appropriate comments you feel are necessary, if any, for the next coder to understand -->
-
-  <!-- /* DONE: make it look awesome. */ -->
-
-  <!-- /* DONE: make it responsive. */ -->
-
-  <!-- DONE: move all TODOs that done above to down below here and change the label to DONE:. -->
+      </div>
+    </form>
+    <script src="script.js"></script>
+  </body>
 </html>

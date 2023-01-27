@@ -4,15 +4,22 @@
 class jQueryLite {
   constructor(sel) {
     if (typeof sel === 'string' || sel instanceof String) {
-      this.elements = [...document.querySelectorAll(sel)];
+      if (sel.startsWith('<') && sel.endsWith('>')) {
+        this.elements = [
+          document.createElement(sel.substring(1, sel.length - 1)),
+        ];
+        console.log(sel.substring(1, sel.length - 1));
+      } else {
+        this.elements = [...document.querySelectorAll(sel)];
+      }
     } else if (sel instanceof Array) {
       this.elements = sel;
     } else {
       this.elements = [sel];
     }
   }
-  get self() {
-    return this.elements[0];
+  get(index) {
+    return this.elements[index];
   }
   set html(htmlString) {
     this.elements.forEach((el) => (el.innerHTML = htmlString));
@@ -89,7 +96,7 @@ const select = $('#course');
 const idBox = $('#uvuIdBox');
 const idInput = $('#uvuId');
 
-const logDisplay = $('#logDisplay');
+const logDisplay = $('#logContainer');
 const logList = $('#uvuLogs');
 const logId = $('#uvuIdDisplay');
 
@@ -104,10 +111,10 @@ axios
   .get(url + 'courses')
   .then((response) => {
     response.data.forEach((course) => {
-      const option = $(document.createElement('option'));
+      const option = $('<option>');
       option.val = course.id;
       option.prop('text', course.display);
-      select.append(option.self);
+      select.append(option.get(0));
     });
   })
   .catch((error) => console.log(error));
@@ -127,21 +134,23 @@ select.on('change', () => {
 // ID input box validation check and display logs
 function displayLogsById(id) {
   clearLogs();
-  idInput.removeClass('invalid');
+  idInput.removeClass('bg-red-200');
 
   if (idInput.valid()) {
-    axios
-      .get(`${url}logs?courseId=${select.val}&uvuId=${id}`)
-      .then((response) => {
-        if (response.status == 200 || response.status == 304) {
-          displayLogs(response.data);
-        } else {
-          logId.text = `Error ${response.status}, please try again.`;
-        }
-      })
-      .catch((error) => console.log(error));
-  } else if (idInput.val != '') {
-    idInput.addClass('invalid');
+    if (idInput.val.length >= 8) {
+      axios
+        .get(`${url}logs?courseId=${select.val}&uvuId=${id}`)
+        .then((response) => {
+          if (response.status == 200 || response.status == 304) {
+            displayLogs(response.data);
+          } else {
+            logId.text = `Error ${response.status}, please try again.`;
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+  } else if (idInput.val.length > 1) {
+    idInput.addClass('bg-red-200');
     logReady();
   }
 }
@@ -155,7 +164,7 @@ function displayLogs(data) {
   logDisplay.show();
 
   if (data.length < 1) {
-    logId.text = `Logs not found for ${idInput.value}`;
+    logId.text = `Logs not found for ${idInput.val}`;
   } else {
     logId.text = `Student Logs for ${data[0]['uvuId']}`;
   }
@@ -168,14 +177,14 @@ function displayLogs(data) {
 
 // create collapsible log list item
 function createLogListItem(log) {
-  const listItem = $(document.createElement('li'));
-  listItem.html = `<div><small>${log['date']}</small></div>
-  <div id="log${log['id']}" style="display:none;"><pre><p>${log['text']}</p></pre></div>`;
+  const listItem = $('<li>');
+  listItem.html = `<small class="flex justify-between">${log.date}<svg class="w-5 h-5 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></small>
+  <div id="log${log.id}" style="display:none;" class="mt-2 font-bold"><p>${log.text}</p></div>`;
 
   listItem.on('click', (event) => {
-    $(`#log${log['id']}`).toggle();
+    $(`#log${log.id}`).toggle();
   });
-  return listItem.self;
+  return listItem.get(0);
 }
 
 // remove logs displayed

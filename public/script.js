@@ -1,6 +1,3 @@
-// DONE: Use Axios instead of fetch
-// DONE: Write and use your own lite version of jQuery
-
 class jQueryLite {
   constructor(sel) {
     if (typeof sel === 'string' || sel instanceof String) {
@@ -66,8 +63,8 @@ class jQueryLite {
       }
     });
   }
-  show(displayStyle = 'block') {
-    this.elements.forEach((el) => (el.style.display = displayStyle));
+  show() {
+    this.elements.forEach((el) => (el.style.display = 'block'));
   }
   hide() {
     this.elements.forEach((el) => (el.style.display = 'none'));
